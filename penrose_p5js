@@ -1,31 +1,72 @@
+var v1, v2, v3, v4, v5, v6;
+var v7, v8, v9, v10, v11, v12;
+var v13, v14, v15, v16, v17, v18, v19;
+var vc;	// Centroïd
+
 function setup() {
 	createCanvas(500, 500);
+	
+	v1 = createVector(50.634, 384.626);
+	v2 = createVector(91.103, 408.353);
+	v3 = createVector(91.103, 118.617);
+	v4 = createVector(131.072, 141.692);
+	v5 = createVector(259.576, 215.887);
+	v6 = createVector(300.927, 192.014);
+	
+	v7 = createVector(90.991,408.353);
+	v8 = createVector(90.991,118.618);
+	v9 = createVector(130.96,141.692);
+	v10 = createVector(130.96,337.261);
+	v11 = createVector(383.258,192.159);
+	v12 = createVector(383.258,239.612); 
+	
+	v13 = createVector(131.071,337.492);
+	v14 = createVector(383.37,192.39);
+	v15 = createVector(91.103,23.648);
+	v16 = createVector(50.634,47.739);
+	v17 = createVector(300.927,192.245);
+	v18 = createVector(259.577,216.118);
+	v19 = createVector(131.071,290.312);
 
+	// Centroïd du triangle
+	vc = createVector((v4.x+v18.x+v19.x)/3, (v4.y+v18.y+v19.y)/3);
+	
+	normVect(vc, v1);
+	normVect(vc, v2);
+	normVect(vc, v3);
+	normVect(vc, v4);
+	normVect(vc, v5);
+	normVect(vc, v6);
+}
+
+function normVect(_vc, _vp) {
+	// Un peu de trigonométrie
+	var r = dist(_vc.x, _vc.y, _vp.x, _vp.y);
+	var angle = atan2(_vp.y - _vc.y, _vp.x - _vc.x);
+	//position de la balle
+	var vt = createVector(cos(angle)*r, sin(angle)*r);
+	line(_vc.x, _vc.y, vt.x, vt.y);
+	vt.div(200);
+	//vt.normalize();
+	console.log("vec2 p = vec2("+ vt.x + ", " + vt.y + ");");
 }
 
 function draw() {
 	background(255);
-	var v1 = createVector(50.634, 384.626);
-	var v2 = createVector(91.103, 408.353);
-	var v3 = createVector(91.103, 118.617);
-	var v4 = createVector(131.072, 141.692);
-	var v5 = createVector(259.576, 215.887);
-	var v6 = createVector(300.927, 192.014);
-	fill(0, 0, 255);	// blue
-	/*ellipse(v1.x, v1.y, 15, 15);
-	ellipse(v2.x, v2.y, 15, 15);
-	ellipse(v3.x, v3.y, 15, 15);*/
-	ellipse(v4.x, v4.y, 15, 15);
-	//ellipse(v5.x, v5.y, 15, 15);
-	//ellipse(v6.x, v6.y, 15, 15);
 	
-	/*var v7 = createVector(90.991,408.353);
-	var v8 = createVector(90.991,118.618);
-	var v9 = createVector(130.96,141.692);
-	var v10 = createVector(130.96,337.261);
-	var v11 = createVector(383.258,192.159);
-	var v12 = createVector(383.258,239.612); 
-	fill(255, 204, 0);	// Yellow
+	fill('black')
+	ellipse(vc.x, vc.y, 5, 5);
+	
+
+	fill(0, 0, 255);	// blue
+	ellipse(v1.x, v1.y, 15, 15);
+	ellipse(v2.x, v2.y, 15, 15);
+	ellipse(v3.x, v3.y, 15, 15);
+	ellipse(v4.x, v4.y, 15, 15);		// triangle
+	ellipse(v5.x, v5.y, 15, 15);
+	ellipse(v6.x, v6.y, 15, 15);
+	
+	/*fill(255, 204, 0);	// Yellow
 	ellipse(v7.x, v7.y, 10, 10);
 	ellipse(v8.x, v8.y, 10, 10);
 	ellipse(v9.x, v9.y, 10, 10);
@@ -33,32 +74,14 @@ function draw() {
 	ellipse(v11.x, v11.y, 10, 10);
 	ellipse(v12.x, v12.y, 10, 10);*/
 	
-	var v13 = createVector(131.071,337.492);
-	var v14 = createVector(383.37,192.39);
-	var v15 = createVector(91.103,23.648);
-	var v16 = createVector(50.634,47.739);
-	var v17 = createVector(300.927,192.245);
-	var v18 = createVector(259.577,216.118);
-	var v19 = createVector(131.071,290.312);
-	fill(255, 0, 0);	// red
-	/*ellipse(v13.x, v13.y, 5, 5);
+	/*fill(255, 0, 0);	// red
+	ellipse(v13.x, v13.y, 5, 5);
 	ellipse(v14.x, v14.y, 5, 5);
 	ellipse(v15.x, v15.y, 5, 5);
 	ellipse(v16.x, v16.y, 5, 5);
-	ellipse(v17.x, v17.y, 5, 5);*/
-	ellipse(v18.x, v18.y, 5, 5);
-	ellipse(v19.x, v19.y, 5, 5);
+	ellipse(v17.x, v17.y, 5, 5);
+	ellipse(v18.x, v18.y, 5, 5);	//triangle
+	ellipse(v19.x, v19.y, 5, 5);	// triangle
+	*/
 
-	// Centroïd du triangle
-	var vc = createVector((v4.x+v18.x+v19.x)/3, (v4.y+v18.y+v19.y)/3);
-	fill('black')
-	ellipse(vc.x, vc.y, 5, 5);
-	
-	// Un peu de trigonométrie
-	var r = dist(vc.x, vc.y, v4.x, v4.y);
-	var angle = atan2(v4.y - vc.y, v4.x - vc.x);
-	//position de la balle
-	var vt = createVector(vc.x+cos(angle)*r, vc.y+sin(angle)*r);
-	line(vc.x, vc.y, vt.x, vt.y);
-	console.log(vt.normalize());
-	}
+}
