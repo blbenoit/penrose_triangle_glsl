@@ -27,15 +27,15 @@ function setup() {
 	v17 = createVector(300.927,192.245);  
 	v18 = createVector(131.071,290.312);
 
-	/* Centroïd du triangle
-	vc = createVector((v4.x + v18.x + v19.x) / 3, (v4.y + v18.y + v19.y) / 3);
+	// Centroïd du triangle
+	vc = createVector((v4.x + v9.x + v18.x) / 3, (v4.y + v9.y + v18.y) / 3);
 
 	normVect(vc, v1);
 	normVect(vc, v2);
 	normVect(vc, v3);
 	normVect(vc, v4);
 	normVect(vc, v5);
-	normVect(vc, v6);*/
+	normVect(vc, v6);
 }
 
 function normVect(_vc, _vp) {
@@ -54,8 +54,7 @@ function draw() {
 	background(255);
 
 	fill('black')
-	//ellipse(vc.x, vc.y, 5, 5);
-
+	ellipse(vc.x, vc.y, 5, 5);
 
 	fill(0, 0, 255); // blue
 	/*ellipse(v1.x, v1.y, 15, 15);
