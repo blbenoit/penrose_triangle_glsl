@@ -1,8 +1,6 @@
-// Author:
-// Title:
-
 //https://rawgit.com/joelpurra/jqnpm/master/resources/logotype/penrose-triangle.svg
-https://emerysteele.com/wp-content/uploads/2015/01/Penrose-Triangle.svg
+
+
 
 #ifdef GL_ES
 precision mediump float;
@@ -33,7 +31,7 @@ float triangle (vec2 st,
 }
 
 vec3 dotpoint(vec2 _ptx, vec2 _st) {
-    vec2 toCenter = normalize(_ptx)-_st;
+    vec2 toCenter = _ptx-_st;
     float pct = length(toCenter);
     return vec3( step(pct,0.01) );
 }
@@ -41,22 +39,37 @@ vec3 dotpoint(vec2 _ptx, vec2 _st) {
 void main() {
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
     st.x *= u_resolution.x/u_resolution.y;
+
+    // Remap the space to -1. to 1.
+  	st = st *2.-1.;
     
+    float smoothborder = 0.015;
     vec3 color = vec3(0.);
     
-   vec2 pt1 = vec2(55.0625,182.4375);
-   vec2 pt2 = vec2(80.6875,182.5625); 
-   vec2 pt3 = vec2(151.21875,59.84375); 
-   vec2 pt4 = vec2(252.21615,228.15076); 
-   vec2 pt5 = vec2(264.76729,205.25818); 
-   vec2 pt6 = vec2(151.5625,13.25);  
+    vec2 p0 = vec2(0.0, 0.0);
+    vec2 toCenter = p0-st;
+    float pct = length(toCenter);
+    //color += step(pct, 0.01);
+    
+    vec2 p1 = vec2(-0.616175, 0.8433116666666666); 
+    vec2 p2 = vec2(-0.4138300000000003, 0.9619466666666666); 
+    vec2 p3 = vec2(-0.41383000000000003, -0.48673333333333346); 
+    vec2 p4 = vec2(0.42853499999999994, -0.00038333333333341103); 
+    vec2 p5 = vec2(0.6352899999999999, -0.11974833333333335); 
+    vec2 p6 = vec2(-0.616175, -0.8422783333333334); 
 
-    color += dotpoint(pt1, st);
-    color += dotpoint(pt2, st);
-    color += dotpoint(pt3, st);
-    color += dotpoint(pt4, st);
-    color += dotpoint(pt5, st);
-    color += dotpoint(pt6, st);
+    color += dotpoint(p1, st);
+    color += dotpoint(p2, st);
+    color += dotpoint(p3, st);
+    color += dotpoint(p4, st);
+    color += dotpoint(p5, st);
+    color += dotpoint(p6, st);
+    
+    color += triangle(st, p1, p3, p2, smoothborder);
+    color += triangle(st, p1, p6, p3, smoothborder);
+    color += triangle(st, p6, p4, p3, smoothborder);
+    color += triangle(st, p6, p5, p4, smoothborder);
+    
 
     gl_FragColor = vec4(color,1.0);
 }
