@@ -47,7 +47,7 @@ void main() {
     // Remap the space to -1. to 1.
   	st = st *2.-1.;
     
-    float smoothborder = 0.005;
+    float smoothborder = 0.01;
     vec3 color = vec3(0.);
     
     vec2 p0 = vec2(0.0, 0.0);
@@ -55,12 +55,12 @@ void main() {
     float pct = length(toCenter);
     //color += step(pct, 0.01);
     
-    vec2 p1 = vec2(-0.49294, 0.6746493333333333); 
-    vec2 p2 = vec2(-0.33106400000000025, 0.7695573333333333); 
-    vec2 p3 = vec2(-0.331064, -0.38938666666666677); 
-    vec2 p4 = vec2(0.34282799999999997, -0.0003066666666667288); 
-    vec2 p5 = vec2(0.5082319999999999, -0.09579866666666667); 
-    vec2 p6 = vec2(-0.49294, -0.6738226666666667); 
+    vec2 p1 = vec2(-0.49294            , 0.6746493333333333    ); 
+    vec2 p2 = vec2(-0.33106400000000025, 0.7695573333333333    ); 
+    vec2 p3 = vec2(-0.331064           , -0.38938666666666677  ); 
+    vec2 p4 = vec2(0.34282799999999997 , -0.0003066666666667288); 
+    vec2 p5 = vec2(0.5082319999999999  , -0.09579866666666667  ); 
+    vec2 p6 = vec2(-0.49294            , -0.6738226666666667   ); 
 
     /*color += dotpoint(p1, st);
     color += dotpoint(p2, st);
@@ -68,12 +68,15 @@ void main() {
     color += dotpoint(p4, st);
     color += dotpoint(p5, st);
     color += dotpoint(p6, st);*/
+    vec3 faceColor = vec3(0.0);
     
     for (float i = 0.0; i < 3.0; i++) {
-        color += triangle(st, p1, p3, p2, smoothborder);
-        color += triangle(st, p1, p6, p3, smoothborder);
-        color += triangle(st, p6, p4, p3, smoothborder);
-        color += triangle(st, p6, p5, p4, smoothborder);
+        faceColor  = vec3(step(i, 0.)*1.0, step(1., i)*1.0, step(2., i)*1.0);
+
+        color += triangle(st, p1, p3, p2, smoothborder) * faceColor;
+        color += triangle(st, p1, p6, p3, smoothborder) * faceColor;
+        color += triangle(st, p6, p4, p3, smoothborder) * faceColor;
+        color += triangle(st, p6, p5, p4, smoothborder) * faceColor;
 
         st *= rotate2d( TWO_PI/3.0 );
     }
